@@ -71,8 +71,8 @@ def getAlarmEvents(events):
 
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
-        if "Alarm" in event['summary']:
-            existingAlarms.append({"start": start, "title": event["summary"]})
+        if 'Alarm' in event['summary']:
+            existingAlarms.append({'start': start, 'title': event['summary']})
 
     return existingAlarms
 
@@ -85,11 +85,11 @@ def writeAlarmsEvents(calCfg, alarms):
     for alarm in alarms:
         alarmFound = False
         for existedAlarm in existingAlarms:
-            if existedAlarm["start"] == alarm["start"]:
+            if existedAlarm['start'] == alarm['start']:
                 alarmFound = True
         if not alarmFound:
-            print("Alarm set successfully")
-            create_event(service, alarm["start"], "Alarm")
+            print('Alarm set successfully')
+            create_event(service, alarm['start'], 'Alarm')
             alarmsAdded = alarmsAdded+1
     return alarmsAdded
     
@@ -101,7 +101,7 @@ def extractAlarmsFrom(events, minutesBeforeEvent, workingHours):
         start = event['start'].get('dateTime', event['start'].get('date'))
         start = dateutil.parser.parse(start) - datetime.timedelta(minutes=minutesBeforeEvent)
         if isValidAlarm(event, minutesBeforeEvent, workingHours):
-            alarms.append({"start": start.isoformat(), "title": "Alarm"})
+            alarms.append({'start': start.isoformat(), 'title': 'Alarm'})
     return alarms
 
 def generateAlarms(calCfg, workingHours, minutesBeforeEvent=10):
